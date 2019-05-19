@@ -1,0 +1,36 @@
+<script type="text/javascript">
+    //this is some freaky stuff, sorry. Jinja interpolates the stockTitle and stockTicker because we are using { { ... } }
+    // This means that { { stockTitle } } is instantiated to Apple for instance when rendering the page.
+    var stockTitle = "{{ stockTitle }}";
+    var stockTicker = "{{ stockTicker }}";
+</script>
+
+<link href="/static/styles/tradingview_widget_single.css" rel="stylesheet">
+
+<!-- TradingView Widget BEGIN -->
+<div class="tradingview-widget-container">
+    <div id="tv-medium-widget"></div>
+        <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+        <script type="text/javascript">
+        new TradingView.MediumWidget(
+        {
+        "container_id": "tv-medium-widget",
+        "symbols": [
+          [
+            stockTitle,
+            stockTicker
+          ]
+        ],
+        "greyText": "Quotes by",
+        "gridLineColor": "#e9e9ea",
+        "fontColor": "#83888D",
+        "underLineColor": "#dbeffb",
+        "trendLineColor": "#4bafe9",
+        "width": "1000px",
+        "height": "400px",
+        "locale": "en"
+      }
+        );
+        </script>
+</div>
+<!-- TradingView Widget END -->

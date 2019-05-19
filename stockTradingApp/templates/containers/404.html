@@ -1,0 +1,33 @@
+<html>
+
+{% include './html_head/dashboard_head.html' %}
+
+<body id="page-top">
+
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+    {% include './components/sidebar.html' %}
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        {% include './containers/page_contents/404_content.html' %}
+
+        {% include './footers/default_footer.html' %}
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+  </div>
+  <!-- End of Page Wrapper -->
+
+
+  {% include './components/logout_modal.html' %}
+  {% include './components/js_imports.html' %}
+
+
+</body>
+
+
+
+</html>
