@@ -1,3 +1,5 @@
+<link href="/static/styles/sidebar.css" rel="stylesheet">
+
 <!-- Sidebar -->
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
@@ -15,24 +17,19 @@
   <!-- Nav Item - Dashboard -->
   <li class="nav-item">
     <a class="nav-link" href="/">
-      <i class="fas fa-fw fa-tachometer-alt"></i>
-      <span>Dashboard</span></a>
+      <i class="fas fa-fw fa-tachometer-alt {% if title == 'Dashboard' %} white-text {% endif %}"></i>
+      <span class="{% if title == 'Dashboard' %} white-text {% endif %}">Dashboard</span></a>
   </li>
 
   <!-- Nav Item - Dashboard -->
   <li class="nav-item">
       <a class="nav-link" href="/trade">
-        <i class="fas fa-exchange-alt"></i>
-        <span>Trade</span></a>
+        <i class="fas fa-exchange-alt {% if title == 'Trade' %} white-text {% endif %}"></i>
+        <span class="{% if title == 'Trade' %} white-text {% endif %}">Trade</span></a>
     </li>
 
   <!-- Divider -->
   <hr class="sidebar-divider d-none d-md-block">
-
-  <!-- Sidebar Toggler (Sidebar) -->
-  <div class="text-center d-none d-md-inline">
-    <button class="rounded-circle border-0" id="sidebarToggle"></button>
-  </div>
 
 </ul>
 <!-- End of Sidebar -->

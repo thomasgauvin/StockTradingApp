@@ -20,6 +20,7 @@ def create_app(test_config=None):
     app.config.from_mapping(
         SECRET_KEY='dev',
         DATABASE=os.path.join(BASE_DIR, './db/stocktrading.db'),
+        IEX_TOKEN='pk_97d8734671f34d31ba717a6fd470500c'
     )
 
     if test_config is None:

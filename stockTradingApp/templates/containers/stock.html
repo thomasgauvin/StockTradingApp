@@ -1,0 +1,68 @@
+<html>
+
+{% include './html_head/dashboard_head.html' %}
+
+<link href='/static/styles/dashboard.css' rel="stylesheet">
+
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+    {% include './components/sidebar.html' %}
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            {% include './components/topbar.html' %}
+            
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+        
+                <!-- Area Chart -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 style="display:inline" class="m-0 font-weight-bold text-primary">{{ stockTicker }}:</h6>
+                        <h6 style="display:inline;"> {{ stockTitle }} </h6>
+                    </div>
+                        <div class="card-body">
+        
+                        {% include './components/tradingview_widget_single.html' %}
+                    
+                        <hr>
+                        <p class="card-text">
+                            The main function of this web application is to track the gains of your portfolio. To see more information,
+                            there exists many reliable websites that provide extensive reports and details on the stock. The link below will direct you to 
+                            the TradingView site, where you can find more information on the stock.
+                        </p>
+                        <p class="card-text">
+                            Quick tip: If you want to find a stock on a different exchange, prepend the exchange to the stock. For example, 'TSX:SHOP' will
+                            obtain the Shopify Stock on the Toronto Stock Exchange. 
+                        </p>
+                        <div>
+                            <a href="https://www.tradingview.com/symbols/{{ stockTicker }}/" class="btn btn-primary">{{ stockTicker }} on TradingView</a>
+                        </div>
+                
+                    </div>
+                </div>
+        
+        </div>
+        <!-- /.container-fluid -->
+    
+    </div>
+    <!-- End of Main Content -->
+
+    {% include './footers/default_footer.html' %}
+
+    </div>
+
+</div>
+
+{% include './components/js_imports.html' %}
+        
+</body>
+
+</html>
+

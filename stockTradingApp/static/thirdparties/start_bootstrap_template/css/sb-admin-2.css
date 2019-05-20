@@ -3289,7 +3289,7 @@ input[type="button"].btn-block {
   min-width: 10rem;
   padding: 0.5rem 0;
   margin: 0.125rem 0 0;
-  font-size: 0.85rem;
+  font-size: 1rem;
   color: #858796;
   text-align: left;
   list-style: none;
@@ -10866,7 +10866,7 @@ a:focus {
 }
 
 .dropdown .dropdown-menu {
-  font-size: 0.85rem;
+  font-size: 1rem;
 }
 
 .dropdown .dropdown-menu .dropdown-header {
@@ -10940,7 +10940,7 @@ a:focus {
 }
 
 .topbar .navbar-search input {
-  font-size: 0.85rem;
+  font-size: 1rem;
 }
 
 .topbar .topbar-divider {
@@ -11112,7 +11112,7 @@ a:focus {
 .sidebar .nav-item .collapsing .collapse-inner {
   padding: .5rem 0;
   min-width: 10rem;
-  font-size: 0.85rem;
+  font-size: 1rem;
   margin: 0 0 1rem 0;
 }
 
@@ -11189,6 +11189,7 @@ a:focus {
 }
 
 .sidebar .sidebar-brand {
+  line-height: 1.2rem;
   height: 4.375rem;
   text-decoration: none;
   font-size: 1rem;
@@ -11253,11 +11254,11 @@ a:focus {
     width: 14rem;
   }
   .sidebar .nav-item .nav-link i {
-    font-size: 0.85rem;
+    font-size: 1rem;
     margin-right: 0.25rem;
   }
   .sidebar .nav-item .nav-link span {
-    font-size: 0.85rem;
+    font-size: 1rem;
     display: inline;
   }
   .sidebar .nav-item .nav-link[data-toggle="collapse"]::after {

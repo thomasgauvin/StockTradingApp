@@ -13,7 +13,40 @@
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
 
-    {% include './containers/page_contents/dashboard_content.html' %}
+        <!-- Main Content -->
+        <div id="content">
+
+        {% include './components/topbar.html' %}
+        
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+            
+                <!-- Area Chart -->
+                <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Area Chart</h6>
+                </div>
+                <div class="card-body">
+                    <div class="chart-area">
+                    <canvas id="stockChart"></canvas>
+                    </div>
+            
+                </div>
+                </div>
+            
+                <!-- Page level plugins -->
+                <script src="/static/thirdparties/chart.js/Chart.min.js"></script>
+            
+                <!-- Page level custom scripts -->
+                <script src="/static/js/charts/stock-chart.js"></script>
+            
+                {% include "./components/current_holdings.html" %}
+            
+            </div>
+            <!-- /.container-fluid -->
+        
+        </div>
+        <!-- End of Main Content -->
 
     {% include './footers/default_footer.html' %}
 
@@ -21,7 +54,6 @@
 
 </div>
 
-{% include './components/logout_modal.html' %}
 {% include './components/js_imports.html' %}
         
 </body>
