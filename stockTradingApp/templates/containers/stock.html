@@ -27,25 +27,40 @@
                         <h6 style="display:inline" class="m-0 font-weight-bold text-primary">{{ stockTicker }}:</h6>
                         <h6 style="display:inline;"> {{ stockTitle }} </h6>
                     </div>
+                    <style>
+                        .tradingview-widget-container {
+                            padding: 0.5em;
+                        }
+                    </style>
                         <div class="card-body">
         
                         {% include './components/tradingview_widget_single.html' %}
-                    
-                        <hr>
-                        <p class="card-text">
-                            The main function of this web application is to track the gains of your portfolio. To see more information,
-                            there exists many reliable websites that provide extensive reports and details on the stock. The link below will direct you to 
-                            the TradingView site, where you can find more information on the stock.
-                        </p>
-                        <p class="card-text">
-                            Quick tip: If you want to find a stock on a different exchange, prepend the exchange to the stock. For example, 'TSX:SHOP' will
-                            obtain the Shopify Stock on the Toronto Stock Exchange. 
-                        </p>
-                        <div>
-                            <a href="https://www.tradingview.com/symbols/{{ stockTicker }}/" class="btn btn-primary">{{ stockTicker }} on TradingView</a>
+
                         </div>
-                
-                    </div>
+
+                        <div class="card-body" style="display:flex;">
+                                {% include './components/tradingview_widget_fundamentaldata.html' %}
+
+                                {% include './components/tradingview_widget_companyinfo.html' %}        
+                        </div>
+                        <div class="card-body">
+                                {% include './components/trade_form.html' %}     
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">
+                                The main function of this web application is to track the gains of your portfolio. To see more information,
+                                there exists many reliable websites that provide extensive reports and details on the stock. The link below will direct you to 
+                                the TradingView site, where you can find more information on the stock.
+                            </p>
+                            <p class="card-text">
+                                Quick tip: If you want to find a stock on a different exchange, prepend the exchange to the stock. For example, 'TSX:SHOP' will
+                                obtain the Shopify Stock on the Toronto Stock Exchange. 
+                            </p>
+                            <div>
+                                <a href="https://www.tradingview.com/symbols/{{ stockTicker }}/" class="btn btn-primary">{{ stockTicker }} on TradingView</a>
+                            </div>
+                        
+                        </div>
                 </div>
         
         </div>

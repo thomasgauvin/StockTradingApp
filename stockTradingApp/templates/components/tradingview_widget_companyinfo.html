@@ -1,0 +1,21 @@
+<!-- TradingView Widget BEGIN -->
+<style>
+    body iframe{
+        height: 500px !important;
+    }
+</style>
+<div class="tradingview-widget-container">
+        <div class="tradingview-widget-container__widget"></div>
+        <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/symbols/{{ stockTicker }}/" rel="noopener" target="_blank"><span class="blue-text">{{ stockTicker }} Profile</span></a> by TradingView</div>
+        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-profile.js" async>
+        {
+        "symbol": "{{ stockTicker }}",
+        "width": "50%",
+        "height": "100%",
+        "colorTheme": "light",
+        "isTransparent": false,
+        "locale": "en"
+      }
+        </script>
+      </div>
+      <!-- TradingView Widget END -->

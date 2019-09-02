@@ -3,7 +3,9 @@ from collections import defaultdict
 from . import helper_functions as helpFunc
 from .db import get_db
 import requests
-from iexfinance.stocks import Stock
+import json
+from iexfinance.stocks import Stock, get_historical_data
+from datetime import date
 
 bp = Blueprint('endpoints', __name__)
 
@@ -51,29 +53,42 @@ def search():
 
     # check if user searched stock ticker
     stockTicker=request.args.get('stockTicker').upper()
+    stockTitle = ""
+    stockPrice = 0
+    today = ""
 
-    #if non US exchange
-    if check_for_non_us_exchange(stockTicker):
-        stockTitle=get_name(stockTicker[stockTicker.index(':')+1:])
-        return render_template('./containers/stock.html', username=username, stockTitle=stockTitle, stockTicker=stockTicker, title="Buy/Sell " + stockTitle)
+    try:
 
-    #special check for bitcoin and ethereum to usd
-    if stockTicker == "BITCOIN":
-        stockTicker = "BTCUSD"
-    if stockTicker == "ETHEREUM":
-        stockTicker = "ETHUSD"
+        #if non US exchange
+        if check_for_non_us_exchange(stockTicker):
+            stockTitle=get_name(stockTicker[stockTicker.index(':')+1:])
+            return render_template('./containers/stock.html', username=username, stockTitle=stockTitle, stockTicker=stockTicker, title="Buy/Sell " + stockTitle)
 
-    if stockTicker is None:
-        stockTicker = ""
-    stockTitle=get_name(stockTicker)
+        #special check for bitcoin and ethereum to usd
+        if stockTicker == "BITCOIN":
+            stockTicker = "BTCUSD"
+        if stockTicker == "ETHEREUM":
+            stockTicker = "ETHUSD"
 
-    # check if user searched stock title/name
-    if stockTitle is None:
-        stockTitle= request.args.get('stockTicker')
-        if stockTitle is None:
-            stockTitle=""
-        stockTicker = get_ticker(stockTitle)
+        if stockTicker is None:
+            stockTicker = ""
         stockTitle=get_name(stockTicker)
+
+           # get stock price
+        stock = Stock(stockTicker, token = current_app.config['IEX_TOKEN'])
+        stockPrice = stock.get_price()
+        today = str(date.today())
+
+        # check if user searched stock title/name
+        if stockTitle is None:
+            stockTitle= request.args.get('stockTicker')
+            if stockTitle is None:
+                stockTitle=""
+            stockTicker = get_ticker(stockTitle)
+            stockTitle=get_name(stockTicker)
+        
+    except:
+        return render_template('./containers/404.html', title="404")
 
     if stockTicker is None or stockTitle is None:
         return render_template('./containers/404.html', title="404")
@@ -81,7 +96,9 @@ def search():
     # remove commas since trading view bug
     stockTitle = stockTitle.replace(',', '')
 
-    return render_template('./containers/stock.html', username=username, stockTitle=stockTitle, stockTicker=stockTicker, title="Buy/Sell " + stockTitle)
+ 
+
+    return render_template('./containers/stock.html', username=username, stockTitle=stockTitle, stockTicker=stockTicker, title="Buy/Sell " + stockTitle, stockPrice = stockPrice, date = today)
 
 @bp.route('/buy', methods=['GET', 'POST'])
 @helpFunc.login_required
@@ -210,21 +227,38 @@ def get_holdings(user_id, db):
 
     for row in stockRows:
         if not row['stock'] in holdings:
-            holdings[row['stock']] = {'stock':row['stock'], 'quantity':0, 'current_price':0, 'worth':0}
+            holdings[row['stock']] = {'stock':row['stock'], 'quantity':0, 'book_price': "", 'current_price':0, 'book_worth': 0, 'current_worth':0,  'historical_data': [], 'gain$':0, 'gain%':0}
         if row['type']=='BUY':
             holdings[row['stock']]['quantity']+=row['quantity']
         elif row['type'] == 'SELL':
             holdings[row['stock']]['quantity']-=row['quantity']
+        holdings[row['stock']]['date_bought']=row['date']
+        holdings[row['stock']]['book_price']=helpFunc.currency(row['price'])
 
     print(holdings)
     for holding in list(holdings):
         if holdings[holding]['quantity']==0:
             del holdings[holding]
     
+    print(holdings)
     for holding in holdings:
+        print(holding)
+        holdings[holding]['book_worth']=helpFunc.currency(holdings[holding]['book_price']*holdings[holding]['quantity'])
+
         stock = Stock(holdings[holding]['stock'], token = current_app.config['IEX_TOKEN'])
-        holdings[holding]['current_price']= stock.get_price()
-        holdings[holding]['worth']=holdings[holding]['quantity']*holdings[holding]['current_price']
+
+        # catch error if IEX is unable to fulfill the request
+        try:
+            stockPrice = stock.get_price()
+            print(stockPrice)
+            holdings[holding]['current_price']= helpFunc.currency(stockPrice)
+            holdings[holding]['current_worth']= helpFunc.currency(holdings[holding]['current_price']*holdings[holding]['quantity'])
+            holdings[holding]['historical_data']= stock.get_historical_prices()
+            holdings[holding]['gain$']=helpFunc.currency(stockPrice-holdings[holding]['book_price'])
+            holdings[holding]['gain%']=helpFunc.currency(stockPrice/holdings[holding]['book_price']*100-100)
+        except:
+            holdings[holding]['current_price']= "N/A, API limited to US stocks"
+            holdings[holding]['current_worth']= "N/A"
 
     print(holdings)   
     return holdings

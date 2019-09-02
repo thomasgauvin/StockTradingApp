@@ -11,17 +11,29 @@
                     <tr>
                     <th>Stock</th>
                     <th>Quantity</th>
+                    <th>Book Price</th>
                     <th>Current Price</th>
-                    <th>Worth</th>
+                    <th>Book Worth</th>
+                    <th>Current Worth</th>
+                    <th>Gain ($)</th>
+                    <th>Gain (%)</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for holding in holdings %}
                         <tr>
                         <td>{{ holding }}</td>
-                        <td>{{ holdings[holding]['quantity']}}</td>
-                        <td>{{ holdings[holding]['current_price']}}</td>
-                        <td>{{ holdings[holding]['worth']}}</td>
+                        <td>{{ holdings[holding]['quantity'] }}</td>
+                        <td>{{ holdings[holding]['book_price'] }}</td>
+                        <td>{{ holdings[holding]['current_price'] }}</td>
+                        <td>{{ holdings[holding]['book_worth']}}</td>
+                        <td>{{ holdings[holding]['current_worth']}}</td>
+                        <td {% if holdings[holding]['gain$'] > 0 %} class="text-success" {% endif %}
+                            {% if holdings[holding]['gain$'] < 0 %} class="text-danger" {% endif %}>
+                        {{ holdings[holding]['gain$'] }}</td>
+                        <td {% if holdings[holding]['gain%'] > 0 %} class="text-success" {% endif %}
+                            {% if holdings[holding]['gain%'] < 0 %} class="text-danger" {% endif %}>
+                        {{ holdings[holding]['gain%'] }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -30,6 +42,7 @@
             {% if not holdings %}
                 You have no holdings.
             {% endif %}
+            Stock prices are provided by IEX Finance / IEX Cloud.
         </div>
         </div>
     </div>

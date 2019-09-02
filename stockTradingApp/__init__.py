@@ -20,7 +20,8 @@ def create_app(test_config=None):
     app.config.from_mapping(
         SECRET_KEY='dev',
         DATABASE=os.path.join(BASE_DIR, './db/stocktrading.db'),
-        IEX_TOKEN='pk_97d8734671f34d31ba717a6fd470500c'
+        IEX_TOKEN='pk_97d8734671f34d31ba717a6fd470500c',
+        # ALPHA_VANTAGE_KEY='R0C510MH6QVXW6U6' # max calls 5 per minute
     )
 
     if test_config is None:

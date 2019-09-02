@@ -10,3 +10,6 @@ def login_required(f):
             return redirect(url_for('auth.login'))
         return f(*args, **kwargs)
     return decorated_function
+
+def currency(f):
+    return float(int(f * 100))/100
